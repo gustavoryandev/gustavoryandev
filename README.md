@@ -92,6 +92,11 @@ Integrei a equipe de **futsal do Colégio Santo Antônio de 2020 a 2025**, dispu
   <img src="https://raw.githubusercontent.com/gustavoryan-del/gustavoryan-del/main/profile-summary-card-output/github_dark/4-productive-time.svg" alt="Horário mais produtivo" width="48%" />
 </div>
 
+### ⏱️ Tempo de código por linguagem (WakaTime)
+
+<!--START_SECTION:waka-->
+<!--END_SECTION:waka-->
+
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:0A0A0A,50:3B82F6,100:0A0A0A&height=2" width="100%" alt="divider" />
 
 <!--## 🐔 Interesses Pessoais
