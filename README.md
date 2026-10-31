@@ -136,11 +136,8 @@ Integrei a equipe de **futsal do Colégio Santo Antônio de 2020 a 2025**, dispu
 <br>
 
 <div align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/gustavoryan-del/gustavoryan-del/output/pacman-contribution-graph.svg">
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/gustavoryan-del/gustavoryan-del/output/pacman-contribution-graph.svg">
-    <img alt="Pacman Contribution Graph" src="https://raw.githubusercontent.com/gustavoryan-del/gustavoryan-del/output/pacman-contribution-graph.svg">
-  </picture>
+  <img alt="Pacman Contribution Graph" src="https://raw.githubusercontent.com/gustavoryan-del/gustavoryan-del/output/pacman-contribution-graph-dark.svg">
+
 
   <br><br>
 
