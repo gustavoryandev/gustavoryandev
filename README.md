@@ -103,6 +103,20 @@ Integrei a equipe de **futsal do Colégio Santo Antônio de 2020 a 2025**, dispu
 <summary><b>📅 Ver resumo dos últimos 30 dias</b></summary>
 
 <!--START_SECTION:waka-->
+
+```txt
+From: 01 October 2026 - To: 31 October 2026
+
+Total Time: 52 hrs 25 mins
+
+JavaScript                 28 hrs 27 mins        █████████████▒░░░░░░░░░░░   53.20 %
+Java                       12 hrs 29 mins        ██████░░░░░░░░░░░░░░░░░░░   23.37 %
+Bash                       3 hrs 6 mins          █▒░░░░░░░░░░░░░░░░░░░░░░░   05.80 %
+Markdown                   2 hrs 26 mins         █░░░░░░░░░░░░░░░░░░░░░░░░   04.57 %
+CSS                        1 hr 50 mins          █░░░░░░░░░░░░░░░░░░░░░░░░   03.45 %
+JSON                       1 hr 13 mins          ▓░░░░░░░░░░░░░░░░░░░░░░░░   02.30 %
+```
+
 <!--END_SECTION:waka-->
 
 </details>
