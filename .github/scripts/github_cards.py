@@ -94,7 +94,7 @@ query($login: String!) {
     followers { totalCount }
     pullRequests { totalCount }
     issues { totalCount }
-    repositories(ownerAffiliation: OWNER, isFork: false, first: 100,
+    repositories(ownerAffiliations: OWNER, isFork: false, first: 100,
                  orderBy: {field: PUSHED_AT, direction: DESC}) {
       totalCount
       nodes { stargazerCount forkCount primaryLanguage { name } }
