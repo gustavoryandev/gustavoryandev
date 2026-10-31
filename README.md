@@ -94,7 +94,7 @@ Integrei a equipe de **futsal do Colégio Santo Antônio de 2020 a 2025**, dispu
 
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:0A0A0A,50:3B82F6,100:0A0A0A&height=2" width="100%" alt="divider" />
 
-## 🐔 Interesses Pessoais
+<!--## 🐔 Interesses Pessoais
 
 | | |
 |:---:|:---|
@@ -103,7 +103,7 @@ Integrei a equipe de **futsal do Colégio Santo Antônio de 2020 a 2025**, dispu
 | ♟️ | Partidas de [xadrez online](https://www.chess.com/home) e jogos de FPS (foco em Valorant). |
 | 📺 | Séries favoritas: *Breaking Bad* e *The Mentalist*. |
 
-<img src="https://capsule-render.vercel.app/api?type=rect&color=0:0A0A0A,50:3B82F6,100:0A0A0A&height=2" width="100%" alt="divider" />
+<img src="https://capsule-render.vercel.app/api?type=rect&color=0:0A0A0A,50:3B82F6,100:0A0A0A&height=2" width="100%" alt="divider" /> -->
 
 ## <img height="25" alt="Spotify" src="https://joaopauloaramuni.github.io/image/spotify.svg?v=1&cb=1" style="vertical-align: middle;"/> Gustavo's Spotify Data
 
