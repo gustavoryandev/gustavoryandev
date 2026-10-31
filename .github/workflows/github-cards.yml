@@ -1,0 +1,31 @@
+name: GitHub Cards
+
+on:
+  schedule:
+    - cron: "30 */6 * * *" # a cada 6 horas (offset para não colidir com os outros workflows)
+  workflow_dispatch: # permite rodar manualmente na aba Actions
+
+permissions:
+  contents: write # necessário para commitar os SVGs
+
+jobs:
+  cards:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Gerar cards do GitHub
+        env:
+          # Usa o token pessoal (secret GH_PAT) se existir; senão, o token padrão
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+          GH_LOGIN: ${{ github.repository_owner }}
+        run: python3 .github/scripts/github_cards.py
+
+      - name: Commitar os cards
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add github-cards/
+          git diff --cached --quiet || git commit -m "chore: atualiza cards do GitHub"
+          git pull --rebase
+          git push
