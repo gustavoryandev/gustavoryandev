@@ -13,9 +13,9 @@ import sys
 
 # mesmas cores do heatmap do portfólio, do menos ao mais commits
 PALETTE = ["#103454", "#145C91", "#167AB6", "#38BDF8"]
-BACKGROUND = "#0B192B"  # fundo do painel do portfólio (substitui o #0d1117 do tema GitHub Dark)
-BORDER = "#163A59"      # borda dos painéis do portfólio
-LABEL = "#A5BDDF"       # cor dos rótulos (meses) no portfólio
+BACKGROUND = "#0A0A0A"  # fundo do perfil (substitui o #0d1117 do tema GitHub Dark)
+BORDER = "#1E1E1E"      # borda dos cards do perfil
+LABEL = "#A1A1AA"       # texto secundário do perfil
 RADIUS = 8              # cantos arredondados, como o rounded-lg do portfólio
 
 HEX = re.compile(r"#[0-9a-fA-F]{6}\b")
@@ -73,7 +73,7 @@ def recolor_text(svg):
 
 
 def add_card_border(svg):
-    """Arredonda o fundo e adiciona a borda #163A59, como o card do portfólio."""
+    """Arredonda o fundo e adiciona a borda #163A59, como os cards do perfil."""
     root = re.search(r"<svg\b[^>]*>", svg)
     if not root:
         return svg
