@@ -1,59 +1,63 @@
 #!/usr/bin/env python3
-"""Gera um card SVG com o resumo do WakaTime, na paleta Alvinegro + Azul.
+"""Gera 2 cards SVG do WakaTime na paleta do perfil (preto + azul).
+
+Cards gerados em waka-card/:
+    waka-time.svg      tempo por linguagem (donut)
+    waka-percent.svg   porcentagem por linguagem (barras)
 
 Uso (no GitHub Actions):
     WAKATIME_API_KEY=... python3 .github/scripts/waka_card.py
 
 Variáveis opcionais:
-    WAKA_RANGE       período da API (padrão: last_30_days)
-    WAKA_LANG_COUNT  quantidade de linguagens (padrão: 6)
-    WAKA_OUT         arquivo de saída (padrão: waka-card/waka-30d.svg)
+    WAKA_RANGE   período da API (padrão: last_30_days)
+    WAKA_OUT     pasta de saída (padrão: waka-card)
 """
 import base64
 import json
+import math
 import os
 import sys
 import time
 import urllib.error
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime
 from xml.sax.saxutils import escape
 
-# Paleta do projeto
-BG = "#0A0A0A"
-BORDER = "#1E1E1E"
-TRACK = "#1E1E1E"
-TITLE = "#3B82F6"
+# ---------------------------------------------------------------- paleta (a mesma do README)
+BG = "#0A0A0A"       # fundo
+BORDER = "#1E1E1E"   # borda / divisórias
+TRACK = "#1E1E1E"    # trilho das barras e do donut
+TITLE = "#3B82F6"    # títulos dos cards
+ACCENT = "#38BDF8"   # destaques (pico, sequências)
+LEVEL3 = "#3B82F6"
+LEVEL2 = "#1D4ED8"
+LEVEL1 = "#1E1E1E"
 TEXT = "#FFFFFF"
-MUTED = "#A1A1AA"
+WHITE = "#FFFFFF"
+MUTED = "#A1A1AA"    # texto secundário
 FAINT = "#6B7280"
-GRAD_A = "#0D6EFD"
-GRAD_B = "#38BDF8"
+OTHER = "#52525B"
+SLICES = ["#38BDF8", "#3B82F6", "#6366F1", "#1D4ED8", "#A1A1AA"]
 
 FONT = "Inter, 'Segoe UI', Helvetica, Arial, sans-serif"
-
-WIDTH = 800
-BAR_X = 170
-BAR_W = 400
-PCT_X = 650
-TIME_X = 768
+W, H = 480, 280
+PAD = 28
 
 
+# ---------------------------------------------------------------- utilidades
 def fmt_time(seconds):
     seconds = int(seconds)
     h, m = seconds // 3600, (seconds % 3600) // 60
-    if h:
-        return f"{h} h {m:02d} min"
-    return f"{m} min"
+    return f"{h} h {m:02d} min" if h else f"{m} min"
 
 
 def fmt_pct(p):
-    return f"{p:.2f}".replace(".", ",") + " %"
+    return f"{p:.1f}".replace(".", ",") + "%"
 
 
-def fmt_date(iso):
+def fmt_day(iso):
     try:
-        return datetime.fromisoformat(iso.replace("Z", "+00:00")).strftime("%d/%m/%Y")
+        return datetime.fromisoformat(iso.replace("Z", "+00:00")).strftime("%d/%m")
     except Exception:
         return ""
 
@@ -62,7 +66,7 @@ def fetch_stats(api_key, wk_range):
     url = f"https://wakatime.com/api/v1/users/current/stats/{wk_range}"
     token = base64.b64encode(api_key.encode()).decode()
     req = urllib.request.Request(url, headers={"Authorization": f"Basic {token}"})
-    for attempt in range(6):
+    for _ in range(6):
         try:
             with urllib.request.urlopen(req, timeout=30) as resp:
                 if resp.status == 202:  # o WakaTime ainda está calculando
@@ -77,101 +81,124 @@ def fetch_stats(api_key, wk_range):
     raise RuntimeError("WakaTime não retornou os dados a tempo.")
 
 
-def render(data, lang_count=6, title="Resumo dos últimos 30 dias"):
-    langs = [l for l in data.get("languages", []) if l.get("total_seconds", 0) > 0]
-    langs = langs[:lang_count]
-
-    total = fmt_time(data.get("total_seconds", 0))
-    start, end = fmt_date(data.get("start", "")), fmt_date(data.get("end", ""))
-    period = f"{start} – {end}" if start and end else ""
-    updated = datetime.now(timezone.utc).strftime("%d/%m/%Y")
-
-    first_row_y = 134
-    step = 36
-    rows = max(len(langs), 1)
-    height = first_row_y + (rows - 1) * step + 54
-
-    out = []
-    out.append(
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" height="{height}" '
-        f'viewBox="0 0 {WIDTH} {height}" role="img" aria-label="{escape(title)}">'
+# ---------------------------------------------------------------- SVG
+def text(x, y, content, size=13, fill=TEXT, weight=400, anchor="start"):
+    return (
+        f'<text x="{x}" y="{y}" font-family="{FONT}" font-size="{size}" font-weight="{weight}" '
+        f'fill="{fill}" text-anchor="{anchor}">{escape(str(content))}</text>'
     )
-    out.append(
+
+
+def frame(title, subtitle, body):
+    return (
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" '
+        f'role="img" aria-label="{escape(title)}">'
         f'<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="0">'
-        f'<stop offset="0" stop-color="{GRAD_A}"/><stop offset="1" stop-color="{GRAD_B}"/>'
+        f'<stop offset="0" stop-color="#0D6EFD"/><stop offset="1" stop-color="{ACCENT}"/>'
         f"</linearGradient></defs>"
+        f'<rect x="0.5" y="0.5" width="{W - 1}" height="{H - 1}" rx="12" fill="{BG}" stroke="{BORDER}"/>'
+        f'<rect x="{PAD}" y="24" width="26" height="3" rx="1.5" fill="url(#g)"/>'
+        f'<text x="{PAD}" y="50" font-family="{FONT}" font-size="17" font-weight="700" fill="{TITLE}">{escape(title)}</text>'
+        f'<text x="{PAD}" y="70" font-family="{FONT}" font-size="12" fill="{MUTED}">{escape(subtitle)}</text>'
+        f"{body}</svg>"
     )
-    out.append(
-        f'<rect x="0.5" y="0.5" width="{WIDTH - 1}" height="{height - 1}" rx="12" '
-        f'fill="{BG}" stroke="{BORDER}"/>'
-    )
-    out.append(
-        f'<text x="32" y="46" font-family="{FONT}" font-size="20" font-weight="600" '
-        f'fill="{TITLE}">{escape(title)}</text>'
-    )
-    if period:
-        out.append(
-            f'<text x="{WIDTH - 32}" y="46" text-anchor="end" font-family="{FONT}" '
-            f'font-size="13" fill="{MUTED}">{escape(period)}</text>'
-        )
-    out.append(
-        f'<text x="32" y="78" font-family="{FONT}" font-size="14" fill="{MUTED}">'
-        f'Tempo total de código: <tspan fill="{TEXT}" font-weight="700">{escape(total)}</tspan></text>'
-    )
-    out.append(f'<line x1="32" y1="98" x2="{WIDTH - 32}" y2="98" stroke="{BORDER}"/>')
 
+
+def donut(cx, cy, r, sw, shares, colors):
+    circ = 2 * math.pi * r
+    out = [f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="{TRACK}" stroke-width="{sw}"/>']
+    offset = 0.0
+    for share, color in zip(shares, colors):
+        length = circ * share
+        gap = 2 if length > 4 else 0
+        dash = max(length - gap, 0.1)
+        out.append(
+            f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="{color}" stroke-width="{sw}" '
+            f'stroke-dasharray="{dash:.2f} {circ - dash:.2f}" stroke-dashoffset="{-offset:.2f}" '
+            f'transform="rotate(-90 {cx} {cy})"/>'
+        )
+        offset += length
+    return "".join(out)
+
+
+def languages(data):
+    return [l for l in data.get("languages", []) if l.get("total_seconds", 0) > 0]
+
+
+def subtitle_for(data, extra):
+    start, end = fmt_day(data.get("start", "")), fmt_day(data.get("end", ""))
+    period = f"{start} – {end}" if start and end else "Últimos 30 dias"
+    return f"{period} · {extra}"
+
+
+def render_time(data, limit=5):
+    langs = languages(data)
+    total = data.get("total_seconds") or sum(l["total_seconds"] for l in langs)
+    subtitle = subtitle_for(data, f"total {fmt_time(total)}")
+    if not langs or not total:
+        return frame("Tempo por linguagem", subtitle, text(PAD, 150, "Sem dados no período.", 13, MUTED))
+
+    items = [(l["name"], l["total_seconds"]) for l in langs[:limit]]
+    rest = sum(l["total_seconds"] for l in langs[limit:])
+    if rest:
+        items.append(("Outras", rest))
+    shares = [sec / total for _, sec in items]
+    colors = [OTHER if name == "Outras" else SLICES[i % len(SLICES)] for i, (name, _) in enumerate(items)]
+
+    hours, minutes = int(total) // 3600, (int(total) % 3600) // 60
+    big, small = (f"{hours} h", f"{minutes:02d} min") if hours else (f"{minutes}", "min")
+    body = [donut(112, 178, 50, 22, shares, colors)]
+    body.append(text(112, 180, big, 22, WHITE, 700, "middle"))
+    body.append(text(112, 197, small, 10.5, MUTED, 400, "middle"))
+    for i, ((name, sec), color) in enumerate(zip(items, colors)):
+        y = 128 + i * 25
+        body.append(f'<circle cx="212" cy="{y - 4}" r="5" fill="{color}"/>')
+        body.append(text(226, y, name, 13, TEXT))
+        body.append(text(W - PAD, y, fmt_time(sec), 13, MUTED, 600, "end"))
+    return frame("Tempo por linguagem", subtitle, "".join(body))
+
+
+def render_percent(data, limit=6):
+    langs = languages(data)[:limit]
+    subtitle = subtitle_for(data, "participação no tempo total")
     if not langs:
-        out.append(
-            f'<text x="32" y="{first_row_y}" font-family="{FONT}" font-size="14" '
-            f'fill="{MUTED}">Sem dados no período.</text>'
-        )
+        return frame("Porcentagem por linguagem", subtitle, text(PAD, 150, "Sem dados no período.", 13, MUTED))
+
+    bar_x, bar_w = 142, 232
+    body = []
     for i, lang in enumerate(langs):
-        y = first_row_y + i * step
-        pct = float(lang.get("percent", 0))
-        fill_w = max(6, BAR_W * pct / 100)
-        name = escape(lang.get("name", "?"))
-        out.append(
-            f'<text x="32" y="{y}" font-family="{FONT}" font-size="14" font-weight="600" '
-            f'fill="{TEXT}">{name}</text>'
-        )
-        out.append(
-            f'<rect x="{BAR_X}" y="{y - 10}" width="{BAR_W}" height="10" rx="5" fill="{TRACK}"/>'
-        )
-        out.append(
-            f'<rect x="{BAR_X}" y="{y - 10}" width="{fill_w:.1f}" height="10" rx="5" fill="url(#g)"/>'
-        )
-        out.append(
-            f'<text x="{PCT_X}" y="{y}" text-anchor="end" font-family="{FONT}" '
-            f'font-size="14" font-weight="700" fill="{TEXT}">{fmt_pct(pct)}</text>'
-        )
-        out.append(
-            f'<text x="{TIME_X}" y="{y}" text-anchor="end" font-family="{FONT}" '
-            f'font-size="13" fill="{MUTED}">{escape(fmt_time(lang.get("total_seconds", 0)))}</text>'
-        )
-
-    out.append(
-        f'<text x="{WIDTH - 32}" y="{height - 18}" text-anchor="end" font-family="{FONT}" '
-        f'font-size="11" fill="{FAINT}">Dados do WakaTime · atualizado em {updated}</text>'
-    )
-    out.append("</svg>")
-    return "\n".join(out)
+        y = 108 + i * 28
+        p = float(lang.get("percent", 0))
+        fill_w = max(6, bar_w * p / 100)
+        body.append(text(PAD, y, lang.get("name", "?"), 13, TEXT, 600))
+        body.append(f'<rect x="{bar_x}" y="{y - 10}" width="{bar_w}" height="10" rx="5" fill="{TRACK}"/>')
+        body.append(f'<rect x="{bar_x}" y="{y - 10}" width="{fill_w:.1f}" height="10" rx="5" fill="url(#g)"/>')
+        body.append(text(W - PAD, y, fmt_pct(p), 13, WHITE, 700, "end"))
+    return frame("Porcentagem por linguagem", subtitle, "".join(body))
 
 
+# ---------------------------------------------------------------- principal
 def main():
     api_key = os.environ.get("WAKATIME_API_KEY")
     if not api_key:
         sys.exit("Defina a variável WAKATIME_API_KEY.")
     wk_range = os.environ.get("WAKA_RANGE", "last_30_days")
-    lang_count = int(os.environ.get("WAKA_LANG_COUNT", "6"))
-    out_path = os.environ.get("WAKA_OUT", "waka-card/waka-30d.svg")
+    out_dir = os.environ.get("WAKA_OUT", "waka-card")
 
     data = fetch_stats(api_key, wk_range)
-    svg = render(data, lang_count)
+    cards = {
+        "waka-time.svg": render_time(data),
+        "waka-percent.svg": render_percent(data),
+    }
+    os.makedirs(out_dir, exist_ok=True)
+    for name, svg in cards.items():
+        with open(os.path.join(out_dir, name), "w", encoding="utf-8") as fh:
+            fh.write(svg)
+        print(f"Gerado {out_dir}/{name}")
 
-    os.makedirs(os.path.dirname(out_path), exist_ok=True)
-    with open(out_path, "w", encoding="utf-8") as fh:
-        fh.write(svg)
-    print(f"Card gerado em {out_path}")
+    old = os.path.join(out_dir, "waka-30d.svg")  # card largo da versão anterior
+    if os.path.exists(old):
+        os.remove(old)
 
 
 if __name__ == "__main__":
