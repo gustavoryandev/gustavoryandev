@@ -1,24 +1,29 @@
-name: Waka Readme
+name: Waka Card
 
 on:
   schedule:
-    - cron: "0 */6 * * *" # a cada 6 horas
+    - cron: "15 */6 * * *" # a cada 6 horas (15 min depois dos outros workflows)
   workflow_dispatch: # permite rodar manualmente na aba Actions
 
 permissions:
-  contents: write # necessário para o workflow atualizar o README
+  contents: write # necessário para commitar o SVG
 
 jobs:
-  update-readme:
-    name: WakaReadme DevMetrics
+  waka-card:
     runs-on: ubuntu-latest
     steps:
-      - uses: athul/waka-readme@master
-        with:
+      - uses: actions/checkout@v4
+
+      - name: Gerar card do WakaTime
+        env:
           WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
-          SHOW_TITLE: true
-          TIME_RANGE: last_30_days
-          LANG_COUNT: 6
-          SHOW_TIME: true
-          SHOW_TOTAL: true
-          COMMIT_MESSAGE: "chore: atualiza métricas do WakaTime"
+        run: python3 .github/scripts/waka_card.py
+
+      - name: Commitar o card
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add waka-card/
+          git diff --cached --quiet || git commit -m "chore: atualiza card do WakaTime"
+          git pull --rebase
+          git push
