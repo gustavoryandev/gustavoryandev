@@ -95,12 +95,8 @@ Integrei a equipe de **futsal do Colégio Santo Antônio de 2020 a 2025**, dispu
 ### ⏱️ Tempo de código (WakaTime)
 
 <div align="center">
-  <img src="https://helio-github-stats.vercel.app/api/wakatime?username=43529b87-73e1-4546-a267-d2bf1489e108&custom_title=Tempo+por+linguagem&layout=compact&display_format=time&langs_count=8&card_width=450&line_height=25&theme=dark&bg_color=0A0A0A&title_color=3B82F6&text_color=FFFFFF&icon_color=38BDF8&border_color=1E1E1E&hide_border=false&border_radius=12&locale=pt-br" alt="WakaTime - tempo por linguagem" width="48%" />
-  <img src="https://helio-github-stats.vercel.app/api/wakatime?username=43529b87-73e1-4546-a267-d2bf1489e108&custom_title=Porcentagem+por+linguagem&layout=default&display_format=percent&langs_count=6&card_width=450&line_height=25&theme=dark&bg_color=0A0A0A&title_color=3B82F6&text_color=FFFFFF&icon_color=38BDF8&border_color=1E1E1E&hide_border=false&border_radius=12&locale=pt-br" alt="WakaTime - porcentagem por linguagem" width="48%" />
-</div>
-
-<div align="center">
-  <img src="https://raw.githubusercontent.com/gustavoryan-del/gustavoryan-del/main/waka-card/waka-30d.svg" alt="WakaTime - resumo dos últimos 30 dias" width="97%" />
+  <img src="https://raw.githubusercontent.com/gustavoryan-del/gustavoryan-del/main/waka-card/waka-time.svg" alt="WakaTime - tempo por linguagem" width="48%" />
+  <img src="https://raw.githubusercontent.com/gustavoryan-del/gustavoryan-del/main/waka-card/waka-percent.svg" alt="WakaTime - porcentagem por linguagem" width="48%" />
 </div>
 
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:0A0A0A,50:3B82F6,100:0A0A0A&height=2" width="100%" alt="divider" />
@@ -137,7 +133,6 @@ Integrei a equipe de **futsal do Colégio Santo Antônio de 2020 a 2025**, dispu
 
 <div align="center">
   <img alt="Pacman Contribution Graph" src="https://raw.githubusercontent.com/gustavoryan-del/gustavoryan-del/output/pacman-contribution-graph-dark.svg">
-
 
   <br><br>
 
