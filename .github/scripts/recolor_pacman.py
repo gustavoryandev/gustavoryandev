@@ -11,9 +11,9 @@ mapeia para a escala de azuis abaixo.
 import re
 import sys
 
-# do menos ao mais commits: azul claro = poucos commits, azul escuro = muitos
-PALETTE = ["#7DD3FC", "#38BDF8", "#3B82F6", "#1D4ED8"]
-BACKGROUND = "#0A0A0A"  # fundo da paleta (substitui o #0d1117 do tema GitHub Dark)
+# mesmas cores do heatmap do portfólio, do menos ao mais commits
+PALETTE = ["#103454", "#145C91", "#167AB6", "#38BDF8"]
+BACKGROUND = "#0B192B"  # fundo do painel do portfólio (substitui o #0d1117 do tema GitHub Dark)
 
 HEX = re.compile(r"#[0-9a-fA-F]{6}\b")
 
