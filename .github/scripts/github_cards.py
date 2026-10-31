@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gera 4 cards SVG de estatísticas do GitHub na paleta do portfólio.
+"""Gera 4 cards SVG de estatísticas do GitHub na paleta do perfil (preto + azul).
 
 Cards gerados em github-cards/:
     stats.svg          contribuições, commits, PRs, issues, estrelas, seguidores e sequências
@@ -28,20 +28,21 @@ try:
 except Exception:  # sem tzdata: Brasília é UTC-3 o ano todo
     TZ = timezone(timedelta(hours=-3))
 
-# ---------------------------------------------------------------- paleta
-BG = "#0B192B"       # superfície do portfólio
-BORDER = "#163A59"
-TRACK = "#112238"
-ACCENT = "#38BDF8"   # brand-400
-LEVEL3 = "#167AB6"
-LEVEL2 = "#145C91"
-LEVEL1 = "#103454"
-TEXT = "#E5E7EB"
+# ---------------------------------------------------------------- paleta (a mesma do README)
+BG = "#0A0A0A"       # fundo
+BORDER = "#1E1E1E"   # borda / divisórias
+TRACK = "#1E1E1E"    # trilho das barras e do donut
+TITLE = "#3B82F6"    # títulos dos cards
+ACCENT = "#38BDF8"   # destaques (pico, sequências)
+LEVEL3 = "#3B82F6"
+LEVEL2 = "#1D4ED8"
+LEVEL1 = "#1E1E1E"
+TEXT = "#FFFFFF"
 WHITE = "#FFFFFF"
-MUTED = "#A5BDDF"
-FAINT = "#6E839E"
-OTHER = "#41536B"
-SLICES = ["#38BDF8", "#3B82F6", "#167AB6", "#6366F1", "#A5BDDF"]
+MUTED = "#A1A1AA"    # texto secundário
+FAINT = "#6B7280"
+OTHER = "#52525B"
+SLICES = ["#38BDF8", "#3B82F6", "#6366F1", "#1D4ED8", "#A1A1AA"]
 
 FONT = "Inter, 'Segoe UI', Helvetica, Arial, sans-serif"
 W, H = 480, 280
@@ -181,7 +182,7 @@ def frame(title, subtitle, body):
         f"</linearGradient></defs>"
         f'<rect x="0.5" y="0.5" width="{W - 1}" height="{H - 1}" rx="12" fill="{BG}" stroke="{BORDER}"/>'
         f'<rect x="{PAD}" y="24" width="26" height="3" rx="1.5" fill="url(#g)"/>'
-        f'<text x="{PAD}" y="50" font-family="{FONT}" font-size="17" font-weight="700" fill="{ACCENT}">{escape(title)}</text>'
+        f'<text x="{PAD}" y="50" font-family="{FONT}" font-size="17" font-weight="700" fill="{TITLE}">{escape(title)}</text>'
         f'<text x="{PAD}" y="70" font-family="{FONT}" font-size="12" fill="{MUTED}">{escape(subtitle)}</text>'
         f"{body}</svg>"
     )
