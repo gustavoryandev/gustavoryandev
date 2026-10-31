@@ -99,27 +99,9 @@ Integrei a equipe de **futsal do Colégio Santo Antônio de 2020 a 2025**, dispu
   <img src="https://helio-github-stats.vercel.app/api/wakatime?username=43529b87-73e1-4546-a267-d2bf1489e108&custom_title=Porcentagem+por+linguagem&layout=default&display_format=percent&langs_count=6&card_width=450&line_height=25&theme=dark&bg_color=0A0A0A&title_color=3B82F6&text_color=FFFFFF&icon_color=38BDF8&border_color=1E1E1E&hide_border=false&border_radius=12&locale=pt-br" alt="WakaTime - porcentagem por linguagem" width="48%" />
 </div>
 
-<details>
-<summary><b>📅 Ver resumo dos últimos 30 dias</b></summary>
-
-<!--START_SECTION:waka-->
-
-```txt
-From: 01 October 2026 - To: 31 October 2026
-
-Total Time: 52 hrs 25 mins
-
-JavaScript                 28 hrs 27 mins        █████████████▒░░░░░░░░░░░   53.20 %
-Java                       12 hrs 29 mins        ██████░░░░░░░░░░░░░░░░░░░   23.37 %
-Bash                       3 hrs 6 mins          █▒░░░░░░░░░░░░░░░░░░░░░░░   05.80 %
-Markdown                   2 hrs 26 mins         █░░░░░░░░░░░░░░░░░░░░░░░░   04.57 %
-CSS                        1 hr 50 mins          █░░░░░░░░░░░░░░░░░░░░░░░░   03.45 %
-JSON                       1 hr 13 mins          ▓░░░░░░░░░░░░░░░░░░░░░░░░   02.30 %
-```
-
-<!--END_SECTION:waka-->
-
-</details>
+<div align="center">
+  <img src="https://raw.githubusercontent.com/gustavoryan-del/gustavoryan-del/main/waka-card/waka-30d.svg" alt="WakaTime - resumo dos últimos 30 dias" width="97%" />
+</div>
 
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:0A0A0A,50:3B82F6,100:0A0A0A&height=2" width="100%" alt="divider" />
 
