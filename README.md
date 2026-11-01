@@ -92,6 +92,12 @@ Integrei a equipe de **futsal do Colégio Santo Antônio de 2020 a 2025**, dispu
   <img src="https://raw.githubusercontent.com/gustavoryan-del/gustavoryan-del/main/github-cards/commit-hours.svg" alt="Horários dos commits" width="48%" />
 </div>
 
+### 🏙️ GitHub City
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/gustavoryan-del/gustavoryan-del/main/profile-3d-contrib/profile-city.svg" alt="GitHub City - contribuições em 3D" width="100%" />
+</div>
+
 ### ⏱️ Tempo de código (WakaTime)
 
 <div align="center">
