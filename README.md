@@ -14,7 +14,7 @@
   <a href="mailto:gryangomesguedes@gmail.com" target="_blank"><img src="https://img.shields.io/badge/Gmail-0A0A0A?style=for-the-badge&logo=gmail&logoColor=3B82F6"></a>
   <a href="https://wa.me/5531983940967" target="_blank"><img src="https://img.shields.io/badge/WhatsApp-0A0A0A?style=for-the-badge&logo=whatsapp&logoColor=3B82F6"></a>
   <a href="https://www.instagram.com/gustavo__ryan_/" target="_blank"><img src="https://img.shields.io/badge/Instagram-0A0A0A?style=for-the-badge&logo=instagram&logoColor=3B82F6"></a>
-  <a href="https://github.com/gustavoryan-del" target="_blank"><img src="https://img.shields.io/badge/GitHub-0A0A0A?style=for-the-badge&logo=github&logoColor=3B82F6"></a>
+  <a href="https://github.com/gustavoryandev" target="_blank"><img src="https://img.shields.io/badge/GitHub-0A0A0A?style=for-the-badge&logo=github&logoColor=3B82F6"></a>
 </div>
 
 <br>
@@ -85,24 +85,24 @@ Integrei a equipe de **futsal do Colégio Santo Antônio de 2020 a 2025**, dispu
 ## 📊 GitHub Stats
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/gustavoryan-del/gustavoryan-del/main/github-cards/stats.svg" alt="Estatísticas do GitHub" width="48%" />
-  <img src="https://raw.githubusercontent.com/gustavoryan-del/gustavoryan-del/main/github-cards/langs-commit.svg" alt="Linguagens por commit" width="48%" />
+  <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/github-cards/stats.svg" alt="Estatísticas do GitHub" width="48%" />
+  <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/github-cards/langs-commit.svg" alt="Linguagens por commit" width="48%" />
   <br>
-  <img src="https://raw.githubusercontent.com/gustavoryan-del/gustavoryan-del/main/github-cards/langs-repo.svg" alt="Linguagens por repositório" width="48%" />
-  <img src="https://raw.githubusercontent.com/gustavoryan-del/gustavoryan-del/main/github-cards/commit-hours.svg" alt="Horários dos commits" width="48%" />
+  <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/github-cards/langs-repo.svg" alt="Linguagens por repositório" width="48%" />
+  <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/github-cards/commit-hours.svg" alt="Horários dos commits" width="48%" />
 </div>
 
 ### 🏙️ GitHub City
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/gustavoryan-del/gustavoryan-del/main/profile-3d-contrib/profile-city.svg" alt="GitHub City - contribuições em 3D" width="100%" />
+  <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/profile-3d-contrib/profile-city.svg" alt="GitHub City - contribuições em 3D" width="100%" />
 </div>
 
 ### ⏱️ Tempo de código (WakaTime)
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/gustavoryan-del/gustavoryan-del/main/waka-card/waka-time.svg" alt="WakaTime - tempo por linguagem" width="48%" />
-  <img src="https://raw.githubusercontent.com/gustavoryan-del/gustavoryan-del/main/waka-card/waka-percent.svg" alt="WakaTime - porcentagem por linguagem" width="48%" />
+  <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/waka-card/waka-time.svg" alt="WakaTime - tempo por linguagem" width="48%" />
+  <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/waka-card/waka-percent.svg" alt="WakaTime - porcentagem por linguagem" width="48%" />
 </div>
 
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:0A0A0A,50:3B82F6,100:0A0A0A&height=2" width="100%" alt="divider" />
@@ -138,7 +138,7 @@ Integrei a equipe de **futsal do Colégio Santo Antônio de 2020 a 2025**, dispu
 <br>
 
 <div align="center">
-  <img alt="Pacman Contribution Graph" src="https://raw.githubusercontent.com/gustavoryan-del/gustavoryan-del/output/pacman-contribution-graph-dark.svg">
+  <img alt="Pacman Contribution Graph" src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/output/pacman-contribution-graph-dark.svg">
 
   <br><br>
 
