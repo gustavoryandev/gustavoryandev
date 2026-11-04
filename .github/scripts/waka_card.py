@@ -6,13 +6,12 @@ Cards gerados em waka-card/:
     waka-percent.svg   porcentagem por linguagem (barras)
 
 Uso (no GitHub Actions):
-    WAKATIME_API_KEY=... python3 .github/scripts/waka_card.py
+    WAKATIME_ACCESS_TOKEN=... python3 .github/scripts/waka_card.py
 
 Variáveis opcionais:
     WAKA_RANGE   período da API (padrão: last_30_days)
     WAKA_OUT     pasta de saída (padrão: waka-card)
 """
-import base64
 import json
 import math
 import os
@@ -62,10 +61,9 @@ def fmt_day(iso):
         return ""
 
 
-def fetch_stats(api_key, wk_range):
+def fetch_stats(access_token, wk_range):
     url = f"https://wakatime.com/api/v1/users/current/stats/{wk_range}"
-    token = base64.b64encode(api_key.encode()).decode()
-    req = urllib.request.Request(url, headers={"Authorization": f"Basic {token}"})
+    req = urllib.request.Request(url, headers={"Authorization": f"Bearer {access_token}"})
     for _ in range(6):
         try:
             with urllib.request.urlopen(req, timeout=30) as resp:
@@ -179,13 +177,13 @@ def render_percent(data, limit=6):
 
 # ---------------------------------------------------------------- principal
 def main():
-    api_key = os.environ.get("WAKATIME_API_KEY")
-    if not api_key:
-        sys.exit("Defina a variável WAKATIME_API_KEY.")
+    access_token = os.environ.get("WAKATIME_ACCESS_TOKEN", "").strip()
+    if not access_token:
+        sys.exit("Defina a variável WAKATIME_ACCESS_TOKEN.")
     wk_range = os.environ.get("WAKA_RANGE", "last_30_days")
     out_dir = os.environ.get("WAKA_OUT", "waka-card")
 
-    data = fetch_stats(api_key, wk_range)
+    data = fetch_stats(access_token, wk_range)
     cards = {
         "waka-time.svg": render_time(data),
         "waka-percent.svg": render_percent(data),

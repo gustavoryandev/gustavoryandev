@@ -16,7 +16,7 @@ jobs:
 
       - name: Gerar card do WakaTime
         env:
-          WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
+          WAKATIME_ACCESS_TOKEN: ${{ secrets.WAKATIME_ACCESS_TOKEN }}
         run: python3 .github/scripts/waka_card.py
 
       - name: Commitar o card
