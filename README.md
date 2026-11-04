@@ -103,7 +103,10 @@ Integrei a equipe de **futsal do Colégio Santo Antônio de 2020 a 2025**, dispu
 <div align="center">
   <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/waka-card/waka-time.svg" alt="WakaTime - tempo por linguagem" width="48%" />
   <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/waka-card/waka-percent.svg" alt="WakaTime - porcentagem por linguagem" width="48%" />
+    <br>
+  <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/waka-card/waka-alltime.svg" alt="WakaTime - todo o tempo de programação" width="96%" />
 </div>
+
 
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:0A0A0A,50:3B82F6,100:0A0A0A&height=2" width="100%" alt="divider" />
 
