@@ -251,7 +251,6 @@ def render_percent(data, limit=6):
     return frame("Porcentagem por linguagem", subtitle, "".join(body))
 
 
-
 def fmt_date(iso):
     try:
         return datetime.fromisoformat(str(iso)[:10]).strftime("%d/%m/%Y")
