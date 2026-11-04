@@ -11,12 +11,17 @@ permissions:
 jobs:
   waka-card:
     runs-on: ubuntu-latest
+    timeout-minutes: 10 # derruba o job se algo travar
+    concurrency:
+      group: waka-card
+      cancel-in-progress: true # um novo run cancela o anterior
     steps:
       - uses: actions/checkout@v4
 
       - name: Gerar card do WakaTime
         env:
           WAKATIME_ACCESS_TOKEN: ${{ secrets.WAKATIME_ACCESS_TOKEN }}
+          # WAKA_RANGE: last_7_days # descomente para cards semanais (padrão: last_30_days)
         run: python3 .github/scripts/waka_card.py
 
       - name: Commitar o card
