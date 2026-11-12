@@ -67,7 +67,7 @@ Integrei a equipe de **futsal do Colégio Santo Antônio de 2020 a 2025**, dispu
 
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:0A0A0A,50:3B82F6,100:0A0A0A&height=2" width="100%" alt="divider" />
 
-## 💻 Tecnologias e Ferramentas
+## 💻 Tecnologias e Ferramenta
 
 <div align="center">
 
