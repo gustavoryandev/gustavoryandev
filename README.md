@@ -145,6 +145,10 @@ Integrei a equipe de **futsal do Colégio Santo Antônio de 2020 a 2025**, dispu
 
   <br><br>
 
+  <img alt="Contador de visitas" src="https://hits.sh/github.com/gustavoryandev.svg?style=for-the-badge&label=Visitas&color=0D6EFD&labelColor=0A0A0A" />
+
+  <br><br>
+
   <a href="https://gustavoryan.vercel.app/"><img src="https://img.shields.io/badge/Vamos%20construir%20algo%20juntos%3F-0D6EFD?style=for-the-badge&logo=rocket&logoColor=FFFFFF"></a>
 
   <img alt="Footer" src="https://capsule-render.vercel.app/api?type=waving&color=0:0A0A0A,60:0D6EFD,100:38BDF8&height=100&section=footer"/>
