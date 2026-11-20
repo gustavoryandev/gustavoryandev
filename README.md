@@ -37,7 +37,6 @@ public class Gustavo {
         System.out.println("Hello World!");
     }
 }
-
 ```
 
 ### 🏆 Bagagem do esporte
@@ -103,23 +102,9 @@ Integrei a equipe de **futsal do Colégio Santo Antônio de 2020 a 2025**, dispu
 <div align="center">
   <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/waka-card/waka-time.svg" alt="WakaTime - tempo por linguagem" width="48%" />
   <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/waka-card/waka-percent.svg" alt="WakaTime - porcentagem por linguagem" width="48%" />
-    <br>
-  <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/waka-card/waka-alltime.svg" alt="WakaTime - todo o tempo de programação" width="96%" />
 </div>
 
-
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:0A0A0A,50:3B82F6,100:0A0A0A&height=2" width="100%" alt="divider" />
-
-<!--## 🐔 Interesses Pessoais
-
-| | |
-|:---:|:---|
-| ⚽ | **Atleticano fanático**, acompanho o [Galão da Massa](https://www.arenamrv.com.br/) sempre que posso. |
-| 🏋️ | Nas horas vagas: academia, futebol e esportes competitivos em geral. |
-| ♟️ | Partidas de [xadrez online](https://www.chess.com/home) e jogos de FPS (foco em Valorant). |
-| 📺 | Séries favoritas: *Breaking Bad* e *The Mentalist*. |
-
-<img src="https://capsule-render.vercel.app/api?type=rect&color=0:0A0A0A,50:3B82F6,100:0A0A0A&height=2" width="100%" alt="divider" /> -->
 
 ## <img height="25" alt="Spotify" src="https://joaopauloaramuni.github.io/image/spotify.svg?v=1&cb=1" style="vertical-align: middle;"/> Gustavo's Spotify Data
 
@@ -129,11 +114,12 @@ Integrei a equipe de **futsal do Colégio Santo Antônio de 2020 a 2025**, dispu
   </a>
   <br><br>
 
-   <details>
+  <details>
     <summary><b>🎵 Mostrar mais detalhes do Spotify</b></summary>
     <br>
-    <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/spotify-card/top-tracks.svg" alt="Músicas mais ouvidas" width="48%" />
-    <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/spotify-card/recent.svg" alt="Tocadas recentemente" width="48%" />
+    <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/spotify-card/top-tracks.svg?v=2" alt="Músicas mais ouvidas" width="100%" />
+    <br><br>
+    <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/spotify-card/recent.svg?v=2" alt="Tocadas recentemente" width="100%" />
   </details>
 </div>
 
@@ -144,11 +130,18 @@ Integrei a equipe de **futsal do Colégio Santo Antônio de 2020 a 2025**, dispu
 
   <br><br>
 
-  <img alt="Contador de visitas" src="https://hits.sh/github.com/gustavoryandev.svg?style=for-the-badge&label=Visitas&color=0D6EFD&labelColor=0A0A0A" />
-
-  <br><br>
-
   <a href="https://gustavoryan.vercel.app/"><img src="https://img.shields.io/badge/Vamos%20construir%20algo%20juntos%3F-0D6EFD?style=for-the-badge&logo=rocket&logoColor=FFFFFF"></a>
 
   <img alt="Footer" src="https://capsule-render.vercel.app/api?type=waving&color=0:0A0A0A,60:0D6EFD,100:38BDF8&height=100&section=footer"/>
 </div>
+
+<!--
+## 🐔 Interesses Pessoais
+
+| | |
+|:---:|:---|
+| ⚽ | **Atleticano fanático**, acompanho o [Galão da Massa](https://www.arenamrv.com.br/) sempre que posso. |
+| 🏋️ | Nas horas vagas: academia, futebol e esportes competitivos em geral. |
+| ♟️ | Partidas de [xadrez online](https://www.chess.com/home) e jogos de FPS (foco em Valorant). |
+| 📺 | Séries favoritas: *Breaking Bad* e *The Mentalist*. |
+-->
