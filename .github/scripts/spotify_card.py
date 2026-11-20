@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-"""Gera 2 cards SVG do Spotify na paleta do perfil (preto + azul).
+"""Gera 2 cards SVG do Spotify na paleta do perfil (preto + azul), com capas dos álbuns.
 
 Cards gerados em spotify-card/:
     top-tracks.svg      músicas mais ouvidas (top 5)
     recent.svg          tocadas recentemente (5 únicas)
+
+As capas são baixadas e embutidas no SVG como data URI (base64), porque o GitHub
+bloqueia imagens externas dentro de SVGs.
 
 Variáveis de ambiente (secrets do repositório):
     SPOTIFY_CLIENT_ID
@@ -31,16 +34,20 @@ ACCENT = "#38BDF8"
 TEXT = "#FFFFFF"
 MUTED = "#A1A1AA"
 FAINT = "#6B7280"
+BADGE = "#3F3F46"
 
 FONT = "Inter, 'Segoe UI', Helvetica, Arial, sans-serif"
 W, H = 480, 280
 PAD = 28
+COVER = 28  # tamanho da capa em px
 
 RANGES = {
     "short_term": "Últimas 4 semanas",
     "medium_term": "Últimos 6 meses",
     "long_term": "Desde sempre",
 }
+
+_cover_cache = {}
 
 
 # ---------------------------------------------------------------- API
@@ -70,6 +77,27 @@ def api(path, token):
     )
     with urllib.request.urlopen(req, timeout=30) as resp:
         return json.load(resp)
+
+
+def cover_data_uri(track):
+    """Baixa a menor capa do álbum (64px) e devolve como data URI. None se falhar."""
+    images = (track.get("album") or {}).get("images") or []
+    if not images:
+        return None
+    url = images[-1]["url"]  # a lista vem da maior para a menor
+    if url in _cover_cache:
+        return _cover_cache[url]
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "profile-cards"})
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            data = resp.read()
+            mime = resp.headers.get_content_type() or "image/jpeg"
+        uri = f"data:{mime};base64,{base64.b64encode(data).decode()}"
+    except Exception as err:
+        print(f"Aviso: não foi possível baixar a capa ({err}).")
+        uri = None
+    _cover_cache[url] = uri
+    return uri
 
 
 # ---------------------------------------------------------------- utilidades
@@ -119,24 +147,52 @@ def frame(title, subtitle, body):
     )
 
 
+def cover_svg(i, x, y, uri):
+    """Capa com cantos arredondados; se não houver imagem, um quadrado cinza."""
+    if not uri:
+        return f'<rect x="{x}" y="{y}" width="{COVER}" height="{COVER}" rx="5" fill="{BORDER}"/>'
+    return (
+        f'<clipPath id="c{i}"><rect x="{x}" y="{y}" width="{COVER}" height="{COVER}" rx="5"/></clipPath>'
+        f'<image href="{uri}" x="{x}" y="{y}" width="{COVER}" height="{COVER}" '
+        f'preserveAspectRatio="xMidYMid slice" clip-path="url(#c{i})"/>'
+    )
+
+
 def rows(items):
-    """items: lista de (título, subtítulo, texto à direita)."""
+    """items: lista de dicts com name, sub, right, cover, explicit."""
     body = []
-    for i, (name, sub, right) in enumerate(items):
+    text_x = PAD + 22 + COVER + 10
+    for i, item in enumerate(items):
         y = 104 + i * 34
         body.append(text(PAD, y + 4, i + 1, 15, ACCENT, 700))
-        body.append(text(PAD + 26, y, truncate(name, 34 if right else 44), 13, TEXT, 600))
-        body.append(text(PAD + 26, y + 15, truncate(sub, 44), 11, MUTED))
-        if right:
-            body.append(text(W - PAD, y, right, 11, FAINT, 400, "end"))
+        body.append(cover_svg(i, PAD + 22, y - 8, item["cover"]))
+        body.append(text(text_x, y, truncate(item["name"], 28 if item["right"] else 36), 13, TEXT, 600))
+        sub_x = text_x
+        if item["explicit"]:
+            body.append(f'<rect x="{text_x}" y="{y + 6}" width="11" height="11" rx="2" fill="{BADGE}"/>')
+            body.append(text(text_x + 5.5, y + 14.5, "E", 8, TEXT, 700, "middle"))
+            sub_x = text_x + 16
+        body.append(text(sub_x, y + 15, truncate(item["sub"], 38 if item["explicit"] else 42), 11, MUTED))
+        if item["right"]:
+            body.append(text(W - PAD, y, item["right"], 11, FAINT, 400, "end"))
     return "".join(body)
+
+
+def item_for(track, right=""):
+    return {
+        "name": track["name"],
+        "sub": artists(track),
+        "right": right,
+        "cover": cover_data_uri(track),
+        "explicit": bool(track.get("explicit")),
+    }
 
 
 def render_top(tracks, label):
     title = "Músicas mais ouvidas"
     if not tracks:
         return frame(title, label, text(PAD, 150, "Sem dados no período.", 13, MUTED))
-    items = [(t["name"], artists(t), "") for t in tracks[:5]]
+    items = [item_for(t) for t in tracks[:5]]
     return frame(title, f"{label} · Spotify", rows(items))
 
 
@@ -148,7 +204,7 @@ def render_recent(history):
         if track["id"] in seen:
             continue
         seen.add(track["id"])
-        items.append((track["name"], artists(track), ago(entry["played_at"])))
+        items.append(item_for(track, ago(entry["played_at"])))
         if len(items) == 5:
             break
     if not items:
