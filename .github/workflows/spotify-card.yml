@@ -1,0 +1,31 @@
+name: Spotify Card
+
+on:
+  schedule:
+    - cron: "5 */6 * * *" # a cada 6 horas (offset para não colidir com os outros workflows)
+  workflow_dispatch: # permite rodar manualmente na aba Actions
+
+permissions:
+  contents: write # necessário para commitar os SVGs
+
+jobs:
+  spotify-card:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Gerar cards do Spotify
+        env:
+          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+          SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }}
+        run: python3 .github/scripts/spotify_card.py
+
+      - name: Commitar os cards
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add spotify-card/
+          git diff --cached --quiet || git commit -m "chore: atualiza cards do Spotify"
+          git pull --rebase
+          git push
