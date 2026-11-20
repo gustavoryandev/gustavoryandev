@@ -37,9 +37,10 @@ FAINT = "#6B7280"
 BADGE = "#3F3F46"
 
 FONT = "Inter, 'Segoe UI', Helvetica, Arial, sans-serif"
-W, H = 480, 280
+W, H = 480, 344
 PAD = 28
-COVER = 28  # tamanho da capa em px
+COVER = 40   # tamanho da capa em px
+ROW = 46     # distância entre as linhas
 
 RANGES = {
     "short_term": "Últimas 4 semanas",
@@ -125,7 +126,7 @@ def ago(iso):
 
 
 # ---------------------------------------------------------------- SVG
-def text(x, y, content, size=13, fill=TEXT, weight=400, anchor="start"):
+def text(x, y, content, size=15, fill=TEXT, weight=400, anchor="start"):
     return (
         f'<text x="{x}" y="{y}" font-family="{FONT}" font-size="{size}" font-weight="{weight}" '
         f'fill="{fill}" text-anchor="{anchor}">{escape(str(content))}</text>'
@@ -139,10 +140,10 @@ def frame(title, subtitle, body):
         f'<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="0">'
         f'<stop offset="0" stop-color="#0D6EFD"/><stop offset="1" stop-color="{ACCENT}"/>'
         f"</linearGradient></defs>"
-        f'<rect x="0.5" y="0.5" width="{W - 1}" height="{H - 1}" rx="12" fill="{BG}" stroke="{BORDER}"/>'
-        f'<rect x="{PAD}" y="24" width="26" height="3" rx="1.5" fill="url(#g)"/>'
-        f'<text x="{PAD}" y="50" font-family="{FONT}" font-size="17" font-weight="700" fill="{TITLE}">{escape(title)}</text>'
-        f'<text x="{PAD}" y="70" font-family="{FONT}" font-size="12" fill="{MUTED}">{escape(subtitle)}</text>'
+        f'<rect x="0.5" y="0.5" width="{W - 1}" height="{H - 1}" rx="14" fill="{BG}" stroke="{BORDER}"/>'
+        f'<rect x="{PAD}" y="26" width="30" height="4" rx="2" fill="url(#g)"/>'
+        f'<text x="{PAD}" y="56" font-family="{FONT}" font-size="21" font-weight="700" fill="{TITLE}">{escape(title)}</text>'
+        f'<text x="{PAD}" y="78" font-family="{FONT}" font-size="13" fill="{MUTED}">{escape(subtitle)}</text>'
         f"{body}</svg>"
     )
 
@@ -150,9 +151,9 @@ def frame(title, subtitle, body):
 def cover_svg(i, x, y, uri):
     """Capa com cantos arredondados; se não houver imagem, um quadrado cinza."""
     if not uri:
-        return f'<rect x="{x}" y="{y}" width="{COVER}" height="{COVER}" rx="5" fill="{BORDER}"/>'
+        return f'<rect x="{x}" y="{y}" width="{COVER}" height="{COVER}" rx="6" fill="{BORDER}"/>'
     return (
-        f'<clipPath id="c{i}"><rect x="{x}" y="{y}" width="{COVER}" height="{COVER}" rx="5"/></clipPath>'
+        f'<clipPath id="c{i}"><rect x="{x}" y="{y}" width="{COVER}" height="{COVER}" rx="6"/></clipPath>'
         f'<image href="{uri}" x="{x}" y="{y}" width="{COVER}" height="{COVER}" '
         f'preserveAspectRatio="xMidYMid slice" clip-path="url(#c{i})"/>'
     )
@@ -161,20 +162,20 @@ def cover_svg(i, x, y, uri):
 def rows(items):
     """items: lista de dicts com name, sub, right, cover, explicit."""
     body = []
-    text_x = PAD + 22 + COVER + 10
+    text_x = PAD + 24 + COVER + 12
     for i, item in enumerate(items):
-        y = 104 + i * 34
-        body.append(text(PAD, y + 4, i + 1, 15, ACCENT, 700))
-        body.append(cover_svg(i, PAD + 22, y - 8, item["cover"]))
-        body.append(text(text_x, y, truncate(item["name"], 28 if item["right"] else 36), 13, TEXT, 600))
+        y = 116 + i * ROW  # linha de base do nome
+        body.append(text(PAD, y + 8, i + 1, 18, ACCENT, 700))
+        body.append(cover_svg(i, PAD + 24, y - 17, item["cover"]))
+        body.append(text(text_x, y, truncate(item["name"], 28 if item["right"] else 36), 15, TEXT, 600))
         sub_x = text_x
         if item["explicit"]:
-            body.append(f'<rect x="{text_x}" y="{y + 6}" width="11" height="11" rx="2" fill="{BADGE}"/>')
-            body.append(text(text_x + 5.5, y + 14.5, "E", 8, TEXT, 700, "middle"))
-            sub_x = text_x + 16
-        body.append(text(sub_x, y + 15, truncate(item["sub"], 38 if item["explicit"] else 42), 11, MUTED))
+            body.append(f'<rect x="{text_x}" y="{y + 7}" width="13" height="13" rx="2.5" fill="{BADGE}"/>')
+            body.append(text(text_x + 6.5, y + 17, "E", 9.5, TEXT, 700, "middle"))
+            sub_x = text_x + 19
+        body.append(text(sub_x, y + 18, truncate(item["sub"], 34 if item["explicit"] else 38), 12.5, MUTED))
         if item["right"]:
-            body.append(text(W - PAD, y, item["right"], 11, FAINT, 400, "end"))
+            body.append(text(W - PAD, y, item["right"], 12.5, FAINT, 400, "end"))
     return "".join(body)
 
 
@@ -191,7 +192,7 @@ def item_for(track, right=""):
 def render_top(tracks, label):
     title = "Músicas mais ouvidas"
     if not tracks:
-        return frame(title, label, text(PAD, 150, "Sem dados no período.", 13, MUTED))
+        return frame(title, label, text(PAD, 170, "Sem dados no período.", 15, MUTED))
     items = [item_for(t) for t in tracks[:5]]
     return frame(title, f"{label} · Spotify", rows(items))
 
@@ -208,7 +209,7 @@ def render_recent(history):
         if len(items) == 5:
             break
     if not items:
-        return frame(title, "Spotify", text(PAD, 150, "Sem reproduções recentes.", 13, MUTED))
+        return frame(title, "Spotify", text(PAD, 170, "Sem reproduções recentes.", 15, MUTED))
     return frame(title, "Últimas músicas · Spotify", rows(items))
 
 
