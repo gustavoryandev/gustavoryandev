@@ -129,12 +129,11 @@ Integrei a equipe de **futsal do Colégio Santo Antônio de 2020 a 2025**, dispu
   </a>
   <br><br>
 
-  <details>
+   <details>
     <summary><b>🎵 Mostrar mais detalhes do Spotify</b></summary>
     <br>
-    <img src="https://data-card-for-spotify.herokuapp.com/api/card?user_id=31ear2ooejwizlhlrvhnkeuqfviy" alt="Data Card for Spotify" />
-    <br><br>
-    <img src="https://spotify-recently-played.jeffreyca.workers.dev/svg?user=31ear2ooejwizlhlrvhnkeuqfviy&count=5&width=500&radius=10&unique=1&duration=1&album=1&footer=wave&theme=dark&bg_color=0A0A0A" alt="Spotify recently played"/>
+    <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/spotify-card/top-tracks.svg" alt="Músicas mais ouvidas" width="48%" />
+    <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/spotify-card/recent.svg" alt="Tocadas recentemente" width="48%" />
   </details>
 </div>
 
