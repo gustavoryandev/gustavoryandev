@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Gera 2 cards SVG do Spotify na paleta do perfil (preto + azul), com capas dos álbuns.
 
+Cada card ocupa a largura inteira do README (900px de largura).
+
 Cards gerados em spotify-card/:
     top-tracks.svg      músicas mais ouvidas (top 5)
     recent.svg          tocadas recentemente (5 únicas)
@@ -37,10 +39,10 @@ FAINT = "#6B7280"
 BADGE = "#3F3F46"
 
 FONT = "Inter, 'Segoe UI', Helvetica, Arial, sans-serif"
-W, H = 480, 344
-PAD = 28
-COVER = 40   # tamanho da capa em px
-ROW = 46     # distância entre as linhas
+W, H = 900, 392
+PAD = 36
+COVER = 44   # tamanho da capa em px
+ROW = 52     # distância entre as linhas
 
 RANGES = {
     "short_term": "Últimas 4 semanas",
@@ -126,7 +128,7 @@ def ago(iso):
 
 
 # ---------------------------------------------------------------- SVG
-def text(x, y, content, size=15, fill=TEXT, weight=400, anchor="start"):
+def text(x, y, content, size=16, fill=TEXT, weight=400, anchor="start"):
     return (
         f'<text x="{x}" y="{y}" font-family="{FONT}" font-size="{size}" font-weight="{weight}" '
         f'fill="{fill}" text-anchor="{anchor}">{escape(str(content))}</text>'
@@ -141,9 +143,9 @@ def frame(title, subtitle, body):
         f'<stop offset="0" stop-color="#0D6EFD"/><stop offset="1" stop-color="{ACCENT}"/>'
         f"</linearGradient></defs>"
         f'<rect x="0.5" y="0.5" width="{W - 1}" height="{H - 1}" rx="14" fill="{BG}" stroke="{BORDER}"/>'
-        f'<rect x="{PAD}" y="26" width="30" height="4" rx="2" fill="url(#g)"/>'
-        f'<text x="{PAD}" y="56" font-family="{FONT}" font-size="21" font-weight="700" fill="{TITLE}">{escape(title)}</text>'
-        f'<text x="{PAD}" y="78" font-family="{FONT}" font-size="13" fill="{MUTED}">{escape(subtitle)}</text>'
+        f'<rect x="{PAD}" y="30" width="34" height="4" rx="2" fill="url(#g)"/>'
+        f'<text x="{PAD}" y="64" font-family="{FONT}" font-size="22" font-weight="700" fill="{TITLE}">{escape(title)}</text>'
+        f'<text x="{PAD}" y="88" font-family="{FONT}" font-size="14" fill="{MUTED}">{escape(subtitle)}</text>'
         f"{body}</svg>"
     )
 
@@ -162,20 +164,20 @@ def cover_svg(i, x, y, uri):
 def rows(items):
     """items: lista de dicts com name, sub, right, cover, explicit."""
     body = []
-    text_x = PAD + 24 + COVER + 12
+    text_x = PAD + 30 + COVER + 14
     for i, item in enumerate(items):
-        y = 116 + i * ROW  # linha de base do nome
-        body.append(text(PAD, y + 8, i + 1, 18, ACCENT, 700))
-        body.append(cover_svg(i, PAD + 24, y - 17, item["cover"]))
-        body.append(text(text_x, y, truncate(item["name"], 28 if item["right"] else 36), 15, TEXT, 600))
+        y = 136 + i * ROW  # linha de base do nome
+        body.append(text(PAD, y + 8, i + 1, 20, ACCENT, 700))
+        body.append(cover_svg(i, PAD + 30, y - 19, item["cover"]))
+        body.append(text(text_x, y, truncate(item["name"], 62 if item["right"] else 74), 16, TEXT, 600))
         sub_x = text_x
         if item["explicit"]:
-            body.append(f'<rect x="{text_x}" y="{y + 7}" width="13" height="13" rx="2.5" fill="{BADGE}"/>')
-            body.append(text(text_x + 6.5, y + 17, "E", 9.5, TEXT, 700, "middle"))
-            sub_x = text_x + 19
-        body.append(text(sub_x, y + 18, truncate(item["sub"], 34 if item["explicit"] else 38), 12.5, MUTED))
+            body.append(f'<rect x="{text_x}" y="{y + 7}" width="14" height="14" rx="3" fill="{BADGE}"/>')
+            body.append(text(text_x + 7, y + 18, "E", 10, TEXT, 700, "middle"))
+            sub_x = text_x + 21
+        body.append(text(sub_x, y + 19, truncate(item["sub"], 80 if item["explicit"] else 84), 13.5, MUTED))
         if item["right"]:
-            body.append(text(W - PAD, y, item["right"], 12.5, FAINT, 400, "end"))
+            body.append(text(W - PAD, y, item["right"], 13.5, FAINT, 400, "end"))
     return "".join(body)
 
 
@@ -192,7 +194,7 @@ def item_for(track, right=""):
 def render_top(tracks, label):
     title = "Músicas mais ouvidas"
     if not tracks:
-        return frame(title, label, text(PAD, 170, "Sem dados no período.", 15, MUTED))
+        return frame(title, label, text(PAD, 190, "Sem dados no período.", 16, MUTED))
     items = [item_for(t) for t in tracks[:5]]
     return frame(title, f"{label} · Spotify", rows(items))
 
@@ -209,7 +211,7 @@ def render_recent(history):
         if len(items) == 5:
             break
     if not items:
-        return frame(title, "Spotify", text(PAD, 170, "Sem reproduções recentes.", 15, MUTED))
+        return frame(title, "Spotify", text(PAD, 190, "Sem reproduções recentes.", 16, MUTED))
     return frame(title, "Últimas músicas · Spotify", rows(items))
 
 
