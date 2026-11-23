@@ -124,7 +124,7 @@ Integrei a equipe de **futsal do Colégio Santo Antônio de 2020 a 2025**, dispu
   <details>
     <summary><b>🎵 Mostrar mais detalhes do Spotify</b></summary>
     <br>
-    <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/spotify-card/spotify.svg?v=3" alt="Spotify do Gustavo" width="100%" />
+    <img src="https://gustavoryan.vercel.app/api/spotify-card" alt="Spotify do Gustavo" width="100%" />
   </details>
 </div>
 
