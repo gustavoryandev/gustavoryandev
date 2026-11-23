@@ -19,6 +19,13 @@
 
 <br>
 
+<!-- contador de visitas -->
+<!-- <div align="center">
+  <img src="https://komarev.com/ghpvc/?username=gustavoryandev&label=Visitas&color=0D6EFD&style=for-the-badge" alt="Contador de visitas" />
+</div> -->
+
+<br>
+
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:0A0A0A,50:3B82F6,100:0A0A0A&height=2" width="100%" alt="divider" />
 
 ## ⭐ Sobre mim
@@ -117,9 +124,7 @@ Integrei a equipe de **futsal do Colégio Santo Antônio de 2020 a 2025**, dispu
   <details>
     <summary><b>🎵 Mostrar mais detalhes do Spotify</b></summary>
     <br>
-    <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/spotify-card/top-tracks.svg?v=2" alt="Músicas mais ouvidas" width="100%" />
-    <br><br>
-    <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/spotify-card/recent.svg?v=2" alt="Tocadas recentemente" width="100%" />
+    <img src="https://raw.githubusercontent.com/gustavoryandev/gustavoryandev/main/spotify-card/spotify.svg?v=3" alt="Spotify do Gustavo" width="100%" />
   </details>
 </div>
 
